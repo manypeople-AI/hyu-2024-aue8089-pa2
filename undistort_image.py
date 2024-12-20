@@ -19,11 +19,12 @@ def undistort_image(img: np.ndarray,
     """
 
     height, width, *_ = img.shape
+    print(height, width) # 1920 1080
     undistorted_img = np.zeros_like(img)
 
     for x in range(width):
         for y in range(height):
-
+            print(x,y)
             # apply distortion
             x_d = distort_points(np.array([[x, y]]), D, K)
             u, v = x_d[0, :]
@@ -41,9 +42,14 @@ def undistort_image(img: np.ndarray,
                 b = v - v1
 
                 # [TODO] weighted sum of pixel values in img
-
+                undistorted_img[y, x] = (
+                    (1 - a) * (1 - b) * img[v1, u1] +
+                    a       * (1 - b) * img[v1, u1+1] +
+                    (1 - a) * b       * img[v1+1, u1] +
+                    a       * b       * img[v1+1, u1+1]
+                )
             else:
                 # [TODO] nearest neighbor
-
-
+                undistorted_img[y, x] = img[round(v), round(u)]
+                
     return undistorted_img

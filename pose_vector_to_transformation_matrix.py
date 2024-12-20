@@ -12,7 +12,7 @@ def pose_vector_to_transformation_matrix(pose_vec: np.ndarray) -> np.ndarray:
         T: 4x4 transformation matrix
     """
 
-    # 3d rotation
+    # 3d rotationf
     omega = pose_vec[:3]
 
     # 3d translation

@@ -13,7 +13,7 @@ def distort_points(x: np.ndarray,
         K: camera matrix (3x3)
     """
 
-    k1, k2 = D[0], D[1]
+    k1, k2 = D[:2]
 
     u0 = K[0, 2]
     v0 = K[1, 2]
